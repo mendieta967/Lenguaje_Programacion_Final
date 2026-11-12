@@ -38,8 +38,9 @@ Al iniciar, el programa crea la carpeta `data/` y el archivo
 `data/usuarios.json` si no existen. Si el archivo no contiene usuarios, solicita
 los datos para crear el primer administrador.
 
-El archivo de usuarios está excluido de Git mediante `.gitignore` porque puede
-contener datos personales. No publiques ni compartas ese archivo.
+Los archivos `data/usuarios.json` y `data/pacientes.json` están excluidos de Git
+mediante `.gitignore` porque pueden contener datos personales. No los publiques
+ni compartas.
 
 Cada usuario se guarda con estos campos: `id`, `nombre`, `apellido`, `dni`,
 `usuario`, `password`, `rol` y `activo`. El archivo debe contener JSON válido
@@ -69,7 +70,11 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
   caracteres; y la contraseña, al menos seis.
 - **Protección de cuentas:** no se permite desactivar administradores ni
   cambiar su rol desde la opción de modificación.
-- **Otros roles:** los menús de secretaria y médico todavía están en desarrollo.
+- **Menú de secretaria:** permite registrar, listar, buscar y modificar
+  pacientes. La búsqueda funciona por ID, DNI o nombre y apellido. También
+  permite desactivar y reactivar pacientes con confirmación. La gestión de
+  turnos todavía está en desarrollo.
+- **Menú de médico:** todavía está en desarrollo.
 
 ## Estructura del proyecto
 
@@ -82,28 +87,35 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 │   └── sistema.py
 ├── modules/
 │   ├── autenticacion.py
-│   └── admin/
-│       ├── admin.py
-│       ├── consultas.py
-│       ├── creacion.py
-│       ├── estado.py
-│       └── modificacion.py
+│   ├── admin/
+│   │   ├── menu.py
+│   │   ├── consultas.py
+│   │   ├── creacion.py
+│   │   ├── estado.py
+│   │   └── modificacion.py
+│   └── secretaria/
+│       ├── menu.py
+│       ├── crear_pacientes.py
+│       └── consultas.py
 ├── utils/
 │   └── validaciones.py
 └── data/
-    └── usuarios.json
+    ├── usuarios.json
+    └── pacientes.json
 ```
 
 - `main.py` inicia el programa y dirige al usuario según su rol.
 - `core/` contiene configuración, seguridad e inicialización.
 - `modules/` contiene la autenticación y las funciones del administrador,
-  separadas por responsabilidad.
+  separadas por responsabilidad, además del menú de secretaria y el registro
+  y las consultas de pacientes.
 - `utils/` contiene validaciones reutilizables.
-- `data/usuarios.json` almacena los datos locales y no se versiona.
+- `data/` almacena los datos locales de usuarios y pacientes; no se versionan.
 
 ## Estado del proyecto
 
-El sistema y las operaciones de administración están en desarrollo. Los
-menús de médico y secretaria aún no están implementados. Antes de usar el
+El sistema todavía está en desarrollo. El registro, las consultas, la
+modificación y la gestión de estado de pacientes están implementados; la
+gestión de turnos y el menú de médico siguen pendientes. Antes de usar el
 sistema con datos reales, se debe mejorar el almacenamiento de contraseñas y
 agregar pruebas automatizadas.

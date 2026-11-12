@@ -3,7 +3,8 @@ import os
 from core.sistema import inicializar_sistema
 from core.configuracion import RUTA_USUARIOS
 from modules.autenticacion import iniciar_sesion
-from modules.admin.admin import menu_admin
+from modules.admin.menu import menu_admin
+from modules.secretaria.menu import menu_secretaria
 
 
 def main():
@@ -31,7 +32,7 @@ def main():
                     menu_admin()
 
                 elif usuario["rol"] == "SECRETARIA":
-                    print("\nMenú secretaria en desarrollo...")
+                    menu_secretaria()
 
                 elif usuario["rol"] == "MEDICO":
                     print("\nMenú médico en desarrollo...")
