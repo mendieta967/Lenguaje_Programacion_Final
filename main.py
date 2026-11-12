@@ -1,4 +1,11 @@
+import os
+
 from core.sistema import inicializar_sistema
+from core.configuracion import RUTA_USUARIOS
+from modules.autenticacion import iniciar_sesion
+from modules.admin import menu_admin
+
+
 def main():
 
     inicializar_sistema()
@@ -12,12 +19,24 @@ def main():
         print("\n1. Iniciar sesión")
         print("0. Salir")
 
-        option = input("\nSeleccione una opción: ")
+        opcion = input("\nSeleccione una opción: ")
 
-        if option == "1":
-            print("\nIniciando sesión...")
+        if opcion == "1":
 
-        elif option == "0":
+            usuario = iniciar_sesion(RUTA_USUARIOS)
+
+            if usuario:
+
+                if usuario["rol"] == "ADMIN":
+                    menu_admin()
+
+                elif usuario["rol"] == "SECRETARIA":
+                    print("\nMenú secretaria en desarrollo...")
+
+                elif usuario["rol"] == "MEDICO":
+                    print("\nMenú médico en desarrollo...")
+
+        elif opcion == "0":
             print("\nGracias por utilizar el sistema.")
             break
 
