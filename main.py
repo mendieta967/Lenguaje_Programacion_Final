@@ -3,7 +3,7 @@ import os
 from core.sistema import inicializar_sistema
 from core.configuracion import RUTA_USUARIOS
 from modules.autenticacion import iniciar_sesion
-from modules.admin import menu_admin
+from modules.admin.admin import menu_admin
 
 
 def main():

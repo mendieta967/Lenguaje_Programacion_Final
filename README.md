@@ -1,95 +1,109 @@
 # Sistema de gestión hospitalaria
 
-Proyecto académico de una aplicación de consola escrita en Python. Actualmente
-incluye el menú principal, la creación inicial de un administrador y un flujo
-básico de inicio de sesión.
+Proyecto académico de una aplicación de consola escrita en Python.
 
 ## Requisitos
 
-- Python 3 (desarrollado y probado localmente con Python 3.13).
+- Python 3.13.
 - No se necesitan paquetes externos.
 
 ## Ejecución
 
-Abre una terminal en la carpeta raíz del proyecto (la que contiene `main.py`) y
-ejecuta uno de estos comandos:
+Abre una terminal en la carpeta raíz del proyecto (donde está `main.py`) y
+ejecuta:
 
 ```bash
 python main.py
 ```
 
-En Windows también puedes usar el lanzador de Python:
+En Windows también puedes usar:
 
 ```powershell
 py main.py
 ```
 
-En Git Bash, si Python está instalado en `C:\python313` y el comando `python` no
-está en el `PATH`:
+En Git Bash, si Python está instalado en `C:\python313` y el comando `python`
+no está en el `PATH`:
 
 ```bash
 /c/python313/python.exe main.py
 ```
 
-Las rutas de datos se resuelven desde la carpeta del proyecto. Para ejecutarlo
-desde otra ubicación, indica la ruta completa de `main.py`. Si usas
-`python main.py`, sitúate primero en la raíz del proyecto.
+Las rutas de los datos se calculan desde la ubicación del proyecto, así que
+también puedes indicar la ruta completa de `main.py`.
 
 ## Primer inicio y datos locales
 
-Al iniciar, el programa crea `data/` si no existe. Si `data/usuarios.json` no
-existe, crea el archivo; si está vacío o contiene una lista vacía, solicita los
-datos para registrar el primer administrador. Si ya hay usuarios, muestra el
-menú principal.
+Al iniciar, el programa crea la carpeta `data/` y el archivo
+`data/usuarios.json` si no existen. Si el archivo no contiene usuarios, solicita
+los datos para crear el primer administrador.
 
-El archivo de usuarios es información local y está excluido de Git mediante
-`.gitignore`. No publiques ni compartas ese archivo porque puede contener datos
-personales. Las contraseñas nuevas se guardan como hashes SHA-256, no como texto
-plano. Sin embargo, SHA-256 sin salt es demasiado rápido para proteger
-contraseñas en una aplicación real; usa una función diseñada para contraseñas,
-como scrypt o PBKDF2, antes de almacenar datos reales.
+El archivo de usuarios está excluido de Git mediante `.gitignore` porque puede
+contener datos personales. No publiques ni compartas ese archivo.
 
-Si el archivo de usuarios se creó antes de incorporar el hash, sus contraseñas
-están en el formato anterior y no coincidirán con el verificador actual. Restablece
-esas contraseñas o migra los registros antes de iniciar sesión.
+Cada usuario se guarda con estos campos: `id`, `nombre`, `apellido`, `dni`,
+`usuario`, `password`, `rol` y `activo`. El archivo debe contener JSON válido
+con una lista de usuarios. Si está mal formado, el programa no podrá iniciarse;
+corrige o restaura el archivo local antes de volver a ejecutarlo.
 
-El archivo debe ser JSON válido con una lista de usuarios. Cada registro usa los
-campos `id`, `nombre`, `apellido`, `dni`, `usuario`, `password`, `rol` y
-`activo`. Si el JSON está mal formado, el programa no puede cargar los usuarios
-y termina con un error; corrige o restaura el archivo local antes de volver a
-ejecutarlo.
+Las contraseñas nuevas se guardan como hashes SHA-256, no como texto plano.
+SHA-256 sin salt no es adecuado para proteger contraseñas en una aplicación
+real; antes de usar datos reales, debe reemplazarse por una función diseñada
+para contraseñas, como scrypt o PBKDF2. Los usuarios guardados con un formato
+anterior de contraseña podrían necesitar un restablecimiento o una migración.
 
 ## Funcionalidades actuales
 
 - **Menú principal:** permite iniciar sesión o salir.
 - **Inicio de sesión:** busca el nombre de usuario sin distinguir mayúsculas de
-  minúsculas, rechaza cuentas inactivas y verifica el hash de la contraseña.
-- **Administrador inicial:** se registra cuando todavía no hay usuarios.
-- **Menú de administrador:** muestra opciones para crear y listar usuarios, y
-  permite cerrar sesión. La creación y el listado todavía están en desarrollo.
-- **Otros roles:** secretaria y médico muestran un aviso de que sus menús están
-  en desarrollo.
+  minúsculas, rechaza cuentas inactivas y verifica la contraseña.
+- **Administrador inicial:** se registra durante el primer inicio cuando no
+  hay usuarios.
+- **Menú de administrador:**
+  - Crear usuarios con rol de médico o secretaria.
+  - Listar y buscar usuarios por ID, DNI o nombre de usuario.
+  - Modificar nombre, apellido, DNI, nombre de usuario, contraseña y rol.
+  - Desactivar y reactivar cuentas con confirmación.
+- **Validaciones:** nombres y apellidos aceptan letras y espacios; el DNI debe
+  tener ocho dígitos; el nombre de usuario debe tener al menos cuatro
+  caracteres; y la contraseña, al menos seis.
+- **Protección de cuentas:** no se permite desactivar administradores ni
+  cambiar su rol desde la opción de modificación.
+- **Otros roles:** los menús de secretaria y médico todavía están en desarrollo.
 
 ## Estructura del proyecto
 
 ```text
 .
-├── main.py                 # Menú principal y derivación según el rol
+├── main.py
 ├── core/
-│   ├── configuracion.py    # Rutas absolutas basadas en la ubicación del proyecto
-│   ├── seguridad.py        # Generación y verificación de hashes
-│   └── sistema.py          # Preparación y carga de usuarios
+│   ├── configuracion.py
+│   ├── seguridad.py
+│   └── sistema.py
 ├── modules/
-│   ├── admin.py            # Menú del administrador
-│   ├── autenticacion.py    # Inicio de sesión
-│   └── usuarios.py         # Creación del administrador inicial
+│   ├── autenticacion.py
+│   └── admin/
+│       ├── admin.py
+│       ├── consultas.py
+│       ├── creacion.py
+│       ├── estado.py
+│       └── modificacion.py
+├── utils/
+│   └── validaciones.py
 └── data/
-    └── usuarios.json       # Datos locales; no se versiona
+    └── usuarios.json
 ```
 
-## Estado y próximos pasos
+- `main.py` inicia el programa y dirige al usuario según su rol.
+- `core/` contiene configuración, seguridad e inicialización.
+- `modules/` contiene la autenticación y las funciones del administrador,
+  separadas por responsabilidad.
+- `utils/` contiene validaciones reutilizables.
+- `data/usuarios.json` almacena los datos locales y no se versiona.
 
-El proyecto está en desarrollo. Las opciones de crear/listar usuarios y los
-menús de secretaria y médico son marcadores, no funcionalidades terminadas.
-También queda pendiente reemplazar SHA-256 sin salt por un algoritmo apropiado
-para contraseñas antes de usar el sistema con datos reales.
+## Estado del proyecto
+
+El sistema y las operaciones de administración están en desarrollo. Los
+menús de médico y secretaria aún no están implementados. Antes de usar el
+sistema con datos reales, se debe mejorar el almacenamiento de contraseñas y
+agregar pruebas automatizadas.

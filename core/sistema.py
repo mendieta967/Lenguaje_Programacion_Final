@@ -1,7 +1,7 @@
 import os
 import json
 
-from modules.usuarios import crear_primer_admin
+from modules.admin.creacion import crear_primer_admin
 from core.configuracion import RUTA_DATA, RUTA_USUARIOS
 
 def inicializar_sistema():
