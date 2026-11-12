@@ -1,5 +1,5 @@
 import json
-
+from core.seguridad import generar_hash
 
 def crear_primer_admin(ruta_usuarios):
 
@@ -10,6 +10,8 @@ def crear_primer_admin(ruta_usuarios):
     dni = input("DNI: ")
     usuario = input("Usuario: ")
     password = input("Contraseña: ")
+
+    password = generar_hash(password)
 
     administrador = {
         "id": 1,
@@ -26,3 +28,9 @@ def crear_primer_admin(ruta_usuarios):
         json.dump([administrador], archivo, indent=4, ensure_ascii=False)
 
     print("\nAdministrador creado correctamente.")
+
+def obtener_siguiente_id(usuarios):
+    if not usuarios:
+        return 1
+
+    return max(usuario["id"] for usuario in usuarios) + 1

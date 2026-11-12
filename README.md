@@ -31,9 +31,9 @@ está en el `PATH`:
 /c/python313/python.exe main.py
 ```
 
-La carpeta desde la que se ejecuta el comando importa: las rutas a `data/` son
-relativas a la carpeta actual de la terminal. Ejecuta el programa desde la raíz
-del proyecto.
+Las rutas de datos se resuelven desde la carpeta del proyecto. Para ejecutarlo
+desde otra ubicación, indica la ruta completa de `main.py`. Si usas
+`python main.py`, sitúate primero en la raíz del proyecto.
 
 ## Primer inicio y datos locales
 
@@ -43,9 +43,15 @@ datos para registrar el primer administrador. Si ya hay usuarios, muestra el
 menú principal.
 
 El archivo de usuarios es información local y está excluido de Git mediante
-`.gitignore`. No publiques ni compartas ese archivo: actualmente contiene datos
-personales y las contraseñas se guardan como texto sin protección. Si necesitas
-crear una instalación nueva, ejecuta el programa y completa el registro inicial.
+`.gitignore`. No publiques ni compartas ese archivo porque puede contener datos
+personales. Las contraseñas nuevas se guardan como hashes SHA-256, no como texto
+plano. Sin embargo, SHA-256 sin salt es demasiado rápido para proteger
+contraseñas en una aplicación real; usa una función diseñada para contraseñas,
+como scrypt o PBKDF2, antes de almacenar datos reales.
+
+Si el archivo de usuarios se creó antes de incorporar el hash, sus contraseñas
+están en el formato anterior y no coincidirán con el verificador actual. Restablece
+esas contraseñas o migra los registros antes de iniciar sesión.
 
 El archivo debe ser JSON válido con una lista de usuarios. Cada registro usa los
 campos `id`, `nombre`, `apellido`, `dni`, `usuario`, `password`, `rol` y
@@ -57,7 +63,7 @@ ejecutarlo.
 
 - **Menú principal:** permite iniciar sesión o salir.
 - **Inicio de sesión:** busca el nombre de usuario sin distinguir mayúsculas de
-  minúsculas y verifica la contraseña.
+  minúsculas, rechaza cuentas inactivas y verifica el hash de la contraseña.
 - **Administrador inicial:** se registra cuando todavía no hay usuarios.
 - **Menú de administrador:** muestra opciones para crear y listar usuarios, y
   permite cerrar sesión. La creación y el listado todavía están en desarrollo.
@@ -70,7 +76,8 @@ ejecutarlo.
 .
 ├── main.py                 # Menú principal y derivación según el rol
 ├── core/
-│   ├── configuracion.py    # Rutas de datos
+│   ├── configuracion.py    # Rutas absolutas basadas en la ubicación del proyecto
+│   ├── seguridad.py        # Generación y verificación de hashes
 │   └── sistema.py          # Preparación y carga de usuarios
 ├── modules/
 │   ├── admin.py            # Menú del administrador
@@ -84,5 +91,5 @@ ejecutarlo.
 
 El proyecto está en desarrollo. Las opciones de crear/listar usuarios y los
 menús de secretaria y médico son marcadores, no funcionalidades terminadas.
-También queda pendiente proteger las contraseñas antes de usar el sistema con
-datos reales.
+También queda pendiente reemplazar SHA-256 sin salt por un algoritmo apropiado
+para contraseñas antes de usar el sistema con datos reales.
