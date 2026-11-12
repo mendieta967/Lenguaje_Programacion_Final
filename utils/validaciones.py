@@ -1,3 +1,6 @@
+from datetime import date, datetime
+
+
 # ==========================================
 # CONSTANTES
 # ==========================================
@@ -40,3 +43,25 @@ def validar_password(password):
 def validar_rol(rol):
 
     return rol in ROLES
+
+def validar_telefono(telefono):
+
+    return telefono.isdigit() and len(telefono) == 9
+
+
+def validar_direccion(direccion):
+
+    return len(direccion.strip()) >= 5
+
+
+def validar_fecha(fecha):
+
+    try:
+        fecha_convertida = datetime.strptime(fecha, "%d/%m/%Y")
+    except ValueError:
+        return False
+
+    return (
+        fecha_convertida.strftime("%d/%m/%Y") == fecha
+        and fecha_convertida.date() <= date.today()
+    )

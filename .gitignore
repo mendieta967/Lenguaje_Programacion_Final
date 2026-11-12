@@ -8,3 +8,4 @@ venv/
 
 # Datos locales de usuarios
 /data/usuarios.json
+/data/pacientes.json
