@@ -80,22 +80,15 @@ def _pedir_password():
         print("\nLa contraseña debe tener al menos 6 caracteres.")
 
 
-def _pedir_rol():
-
-    print("\nSeleccione el nuevo rol:")
-    print("1. Médico")
-    print("2. Secretaria")
+def _pedir_especialidad():
 
     while True:
-        opcion = input("Opción: ").strip()
+        especialidad = input("Ingrese la especialidad médica: ").strip()
 
-        if opcion == "1":
-            return "MEDICO"
+        if especialidad:
+            return especialidad
 
-        if opcion == "2":
-            return "SECRETARIA"
-
-        print("\nOpción inválida. Seleccione 1 o 2.")
+        print("\nLa especialidad no puede estar vacía.")
 
 
 def modificar_usuario(ruta_usuarios):
@@ -127,7 +120,8 @@ def modificar_usuario(ruta_usuarios):
         print("3. DNI")
         print("4. Nombre de usuario")
         print("5. Contraseña")
-        print("6. Rol")
+        if usuario["rol"] == "MEDICO":
+            print("6. Especialidad médica")
         print("0. Volver")
 
         opcion = input("Seleccione una opción: ").strip()
@@ -147,12 +141,8 @@ def modificar_usuario(ruta_usuarios):
         elif opcion == "5":
             usuario["password"] = _pedir_password()
 
-        elif opcion == "6":
-            if usuario["rol"] == "ADMIN":
-                print("\nNo se puede cambiar el rol de un administrador.")
-                continue
-
-            usuario["rol"] = _pedir_rol()
+        elif opcion == "6" and usuario["rol"] == "MEDICO":
+            usuario["especialidad"] = _pedir_especialidad()
 
         elif opcion == "0":
             print("\nVolviendo al menú administrador.")

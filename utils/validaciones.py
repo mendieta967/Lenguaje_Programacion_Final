@@ -1,5 +1,5 @@
 from datetime import date, datetime
-
+import re
 
 # ==========================================
 # CONSTANTES
@@ -65,3 +65,21 @@ def validar_fecha(fecha):
         fecha_convertida.strftime("%d/%m/%Y") == fecha
         and fecha_convertida.date() <= date.today()
     )
+
+def validar_hora(hora):
+
+    if not re.fullmatch(r"\d{2}:\d{2}", hora):
+        return False
+
+    horas, minutos = hora.split(":")
+
+    horas = int(horas)
+    minutos = int(minutos)
+
+    if horas < 0 or horas > 23:
+        return False
+
+    if minutos < 0 or minutos > 59:
+        return False
+
+    return True
