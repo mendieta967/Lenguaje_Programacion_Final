@@ -1,5 +1,5 @@
 from core.configuracion import cargar_json, guardar_json
-from modules.secretaria.consultas import (
+from modules.secretaria.pacientes.consultas import (
     buscar_paciente_por_id,
     listar_pacientes,
     mostrar_paciente,

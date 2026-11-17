@@ -77,6 +77,17 @@ def _pedir_password():
         print("\nContraseña inválida. Debe tener al menos 6 caracteres.")
 
 
+def _pedir_especialidad():
+
+    while True:
+        especialidad = input("Especialidad médica: ").strip()
+
+        if especialidad:
+            return especialidad
+
+        print("\nLa especialidad no puede estar vacía.")
+
+
 def _pedir_datos_usuario(usuarios):
 
     nombre = _pedir_nombre("Nombre")
@@ -151,6 +162,8 @@ def crear_usuario(ruta_usuarios):
 
         print("\nRol inválido. Seleccione 1 para Médico o 2 para Secretaria.")
 
+    especialidad = _pedir_especialidad() if rol == "MEDICO" else None
+
     nuevo_usuario = {
         "id": obtener_siguiente_id(usuarios),
         "nombre": datos["nombre"],
@@ -161,6 +174,9 @@ def crear_usuario(ruta_usuarios):
         "rol": rol,
         "activo": True,
     }
+
+    if especialidad is not None:
+        nuevo_usuario["especialidad"] = especialidad
 
     usuarios.append(nuevo_usuario)
     guardar_json(ruta_usuarios, usuarios)

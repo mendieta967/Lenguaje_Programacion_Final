@@ -18,9 +18,10 @@ def listar_usuarios(ruta_usuarios):
         f"{'DNI':<12}"
         f"{'USUARIO':<15}"
         f"{'ROL':<12}"
+        f"{'ESPECIALIDAD':<25}"
         f"{'ESTADO':<10}"
     )
-    print("-" * 80)
+    print("-" * 105)
 
     for usuario in usuarios:
         estado = "Activo" if usuario["activo"] else "Inactivo"
@@ -32,6 +33,7 @@ def listar_usuarios(ruta_usuarios):
             f"{usuario['dni']:<12}"
             f"{usuario['usuario']:<15}"
             f"{usuario['rol']:<12}"
+            f"{usuario.get('especialidad', '-'):<25}"
             f"{estado:<10}"
         )
 
@@ -105,4 +107,7 @@ def buscar_usuario(ruta_usuarios):
     print(f"DNI: {usuario_encontrado['dni']}")
     print(f"Usuario: {usuario_encontrado['usuario']}")
     print(f"Rol: {usuario_encontrado['rol']}")
+    if usuario_encontrado["rol"] == "MEDICO":
+        especialidad = usuario_encontrado.get("especialidad", "Sin asignar")
+        print(f"Especialidad: {especialidad}")
     print(f"Estado: {estado}")

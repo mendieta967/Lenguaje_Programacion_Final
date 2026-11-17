@@ -6,6 +6,8 @@ RUTA_DATA = os.path.join(RUTA_PROYECTO, "data")
 
 RUTA_USUARIOS = os.path.join(RUTA_DATA, "usuarios.json")
 RUTA_PACIENTES = os.path.join(RUTA_DATA, "pacientes.json")
+RUTA_AGENDA = os.path.join(RUTA_DATA, "agendas.json")
+RUTA_TURNOS = os.path.join(RUTA_DATA, "turnos.json")
 
 def cargar_json(ruta):
 
