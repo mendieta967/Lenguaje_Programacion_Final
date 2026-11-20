@@ -77,9 +77,11 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 - **Menú de secretaria:** agrupa las operaciones de pacientes (registrar,
   listar, buscar, modificar y gestionar su estado) y ofrece opciones
   principales para agenda médica y turnos. El registro de agendas médicas
-  permite registrar, completar, consultar y modificar horarios semanales
-  corridos o partidos por médico. Eliminar agendas y gestionar turnos sigue en
-  desarrollo. La búsqueda de pacientes funciona por ID, DNI o nombre y apellido.
+  permite registrar, completar, consultar, modificar y eliminar horarios
+  semanales corridos o partidos por médico. La eliminación puede hacerse por
+  día o para toda la agenda. No se elimina un día ni una agenda que tenga
+  turnos asociados. La gestión de turnos sigue en desarrollo. La búsqueda de
+  pacientes funciona por ID, DNI o nombre y apellido.
 - **Menú de médico:** todavía está en desarrollo.
 
 ## Estructura del proyecto
@@ -137,7 +139,7 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 
 El sistema todavía está en desarrollo. El registro, las consultas, la
 modificación y la gestión de estado de pacientes están implementados. La
-agenda permite registrar, consultar y modificar horarios; la eliminación de
-agendas, la gestión de turnos y el menú de médico siguen pendientes. Antes de
-usar el sistema con datos reales, se debe mejorar el almacenamiento de
-contraseñas y agregar pruebas automatizadas.
+agenda permite registrar, consultar, modificar y eliminar horarios. La gestión
+de turnos y el menú de médico siguen pendientes. Antes de usar el sistema con
+datos reales, se debe mejorar el almacenamiento de contraseñas y agregar
+pruebas automatizadas.

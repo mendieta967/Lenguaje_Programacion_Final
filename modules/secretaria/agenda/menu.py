@@ -1,6 +1,7 @@
 from modules.secretaria.agenda.creacion import crear_agenda
 from modules.secretaria.agenda.consultas import consultar_agenda
 from modules.secretaria.agenda.modificacion import modificar_agenda
+from modules.secretaria.agenda.estado import eliminar_agenda
 
 
 def menu_agenda_medica():
@@ -29,7 +30,7 @@ def menu_agenda_medica():
             modificar_agenda()
 
         elif opcion == "4":
-            print("\nDesarrollando eliminación de agenda...")
+            eliminar_agenda()
 
         elif opcion == "0":
             break

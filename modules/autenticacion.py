@@ -1,12 +1,13 @@
 import json
 from core.seguridad import verificar_password
+from utils.entrada import pedir_password
 
 def iniciar_sesion(ruta_usuarios):
 
     print("\n===== INICIO DE SESIÓN =====")
 
     usuario = input("Usuario: ")
-    password = input("Contraseña: ")
+    password = pedir_password("Contraseña: ")
 
     with open(ruta_usuarios, "r", encoding="utf-8") as archivo:
         usuarios = json.load(archivo)

@@ -1,5 +1,6 @@
 from core.seguridad import generar_hash
 from core.configuracion import cargar_json, guardar_json
+from utils.entrada import pedir_password
 from utils.validaciones import (
     validar_nombre,
     validar_dni,
@@ -69,7 +70,7 @@ def _pedir_nombre_usuario(usuarios):
 def _pedir_password():
 
     while True:
-        password = input("Contraseña: ")
+        password = pedir_password("Contraseña: ")
 
         if validar_password(password):
             return generar_hash(password)

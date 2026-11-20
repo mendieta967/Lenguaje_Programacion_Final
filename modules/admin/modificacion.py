@@ -1,5 +1,6 @@
 from core.configuracion import cargar_json, guardar_json
 from core.seguridad import generar_hash
+from utils.entrada import pedir_password
 from modules.admin.consultas import buscar_usuario_por_id, listar_usuarios
 from utils.validaciones import (
     validar_nombre,
@@ -72,7 +73,7 @@ def _pedir_nombre_usuario(usuarios, id_usuario):
 def _pedir_password():
 
     while True:
-        password = input("Ingrese la nueva contraseña: ")
+        password = pedir_password("Ingrese la nueva contraseña: ")
 
         if validar_password(password):
             return generar_hash(password)
