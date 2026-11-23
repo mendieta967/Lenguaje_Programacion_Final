@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "nombre": "Pedro",
+        "apellido": "Olortegui Mendieta",
+        "dni": "73812777",
+        "usuario": "Mendieta967",
+        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "rol": "ADMIN",
+        "activo": true
+    },
+    {
+        "id": 2,
+        "nombre": "Zoe",
+        "apellido": "Olortegui",
+        "dni": "98765432",
+        "usuario": "Zoe123",
+        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "rol": "SECRETARIA",
+        "activo": true
+    },
+    {
+        "id": 3,
+        "nombre": "Pedro",
+        "apellido": "Menideta",
+        "dni": "95211565",
+        "usuario": "PedroMendieta",
+        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "rol": "MEDICO",
+        "activo": true,
+        "especialidad": "Caridiologia"
+    },
+    {
+        "id": 4,
+        "nombre": "Emma",
+        "apellido": "Mendieta",
+        "dni": "12365498",
+        "usuario": "Emma",
+        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "rol": "MEDICO",
+        "activo": true,
+        "especialidad": "Odontologo"
+    }
+]

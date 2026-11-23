@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "nombre": "Emmma",
+        "apellido": "Olortegui",
+        "dni": "12345678",
+        "telefono": "123456789",
+        "direccion": "alberto davila",
+        "fecha_nacimiento": "20/05/2019",
+        "activo": true
+    },
+    {
+        "id": 2,
+        "nombre": "Ceci",
+        "apellido": "Granollers",
+        "dni": "11111111",
+        "telefono": "123456987",
+        "direccion": "jujuy",
+        "fecha_nacimiento": "19/02/1994",
+        "activo": true
+    }
+]

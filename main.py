@@ -4,6 +4,7 @@ from core.sistema import inicializar_sistema
 from core.configuracion import RUTA_USUARIOS
 from modules.autenticacion import iniciar_sesion
 from modules.admin.menu import menu_admin
+from modules.medico.menu import menu_medico
 from modules.secretaria.menu import menu_secretaria
 
 
@@ -35,7 +36,7 @@ def main():
                     menu_secretaria()
 
                 elif usuario["rol"] == "MEDICO":
-                    print("\nMenú médico en desarrollo...")
+                    menu_medico(usuario)
 
         elif opcion == "0":
             print("\nGracias por utilizar el sistema.")
