@@ -80,8 +80,21 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
   permite registrar, completar, consultar, modificar y eliminar horarios
   semanales corridos o partidos por médico. La eliminación puede hacerse por
   día o para toda la agenda. No se elimina un día ni una agenda que tenga
-  turnos asociados. La gestión de turnos sigue en desarrollo. La búsqueda de
-  pacientes funciona por ID, DNI o nombre y apellido.
+  turnos asociados. La búsqueda de pacientes funciona por ID, DNI o nombre y
+  apellido.
+- **Gestión de turnos:** permite buscar un paciente por DNI y registrar el
+  turno si existe; si no existe, solicita sus datos y lo registra antes de
+  continuar. Al reservar, solicita y guarda el motivo de consulta. Consulta la
+  agenda del médico seleccionado y muestra los horarios y fechas disponibles
+  durante los próximos 30 días, en intervalos de 30 minutos. Permite consultar
+  turnos por fecha, médico, DNI del paciente o todos; cada turno muestra el DNI
+  y el motivo registrado. Permite cancelar reservas sin borrar el registro y
+  reprogramar turnos futuros, incluso con otro médico, si el horario está
+  disponible para el médico y no se superpone con otro turno del paciente. Los
+  cambios conservan el turno y su motivo, y guardan un historial de
+  reprogramaciones. El motivo de consulta sirve como antecedente de la
+  solicitud, pero no reemplaza una historia clínica documentada por el
+  profesional.
 - **Menú de médico:** todavía está en desarrollo.
 
 ## Estructura del proyecto
@@ -117,7 +130,11 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 │   │   │   ├── horarios.py
 │   │   │   └── estado.py
 │   │   └── turnos/
-│   │       └── menu.py
+│   │       ├── menu.py
+│   │       ├── creacion.py
+│   │       ├── consultas.py
+│   │       ├── estado.py
+│   │       └── reprogramacion.py
 ├── utils/
 │   └── validaciones.py
 └── data/
@@ -139,7 +156,10 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 
 El sistema todavía está en desarrollo. El registro, las consultas, la
 modificación y la gestión de estado de pacientes están implementados. La
-agenda permite registrar, consultar, modificar y eliminar horarios. La gestión
-de turnos y el menú de médico siguen pendientes. Antes de usar el sistema con
-datos reales, se debe mejorar el almacenamiento de contraseñas y agregar
-pruebas automatizadas.
+agenda permite registrar, consultar, modificar y eliminar horarios. El alta de
+turnos permite reutilizar pacientes existentes o registrar uno nuevo durante
+la operación, y guardar el motivo de consulta. Los turnos se pueden consultar
+por fecha, médico o DNI del paciente, cancelar y reprogramar con historial de
+cambios. La historia clínica y el menú de médico siguen pendientes. Antes de
+usar el sistema con datos reales, se debe mejorar el almacenamiento de
+contraseñas y ampliar la cobertura de pruebas automatizadas.

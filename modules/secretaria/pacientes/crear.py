@@ -28,7 +28,10 @@ def _pedir_nombre(etiqueta):
         print("\nIngrese solo letras y espacios.")
 
 
-def _pedir_dni(pacientes):
+def _pedir_dni(pacientes, dni_pendiente=None):
+
+    if dni_pendiente is not None:
+        return dni_pendiente
 
     while True:
         dni = input("DNI: ").strip()
@@ -78,11 +81,11 @@ def _pedir_fecha_nacimiento():
         return fecha_nacimiento
 
 
-def _pedir_datos_paciente(pacientes):
+def _pedir_datos_paciente(pacientes, dni_pendiente=None):
 
     nombre = _pedir_nombre("Nombre")
     apellido = _pedir_nombre("Apellido")
-    dni = _pedir_dni(pacientes)
+    dni = _pedir_dni(pacientes, dni_pendiente)
     telefono = _pedir_telefono()
     direccion = _pedir_direccion()
     fecha_nacimiento = _pedir_fecha_nacimiento()
@@ -105,13 +108,13 @@ def obtener_siguiente_id(pacientes):
     return max(paciente["id"] for paciente in pacientes) + 1
 
 
-def registrar_paciente(ruta_pacientes):
+def registrar_paciente(ruta_pacientes, dni_pendiente=None):
 
     pacientes = cargar_json(ruta_pacientes) or []
 
     print("\n===== REGISTRAR PACIENTE =====")
 
-    datos = _pedir_datos_paciente(pacientes)
+    datos = _pedir_datos_paciente(pacientes, dni_pendiente)
 
     nuevo_paciente = {
         "id": obtener_siguiente_id(pacientes),
@@ -129,3 +132,4 @@ def registrar_paciente(ruta_pacientes):
     guardar_json(ruta_pacientes, pacientes)
 
     print("\nPaciente registrado correctamente.")
+    return nuevo_paciente
