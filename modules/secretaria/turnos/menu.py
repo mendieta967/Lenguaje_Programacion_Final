@@ -1,7 +1,7 @@
 from modules.secretaria.turnos.creacion import registrar_turno
 from modules.secretaria.turnos.consultas import consultar_turnos
 from modules.secretaria.turnos.reprogramacion import reprogramar_turno
-from modules.secretaria.turnos.estado import cancelar_turno
+from modules.secretaria.turnos.estado import cancelar_turno, marcar_ausente
 
 
 def menu_turnos():
@@ -12,6 +12,7 @@ def menu_turnos():
         print("2. Consultar turnos")
         print("3. Cancelar turno")
         print("4. Reprogramar turno")
+        print("5. Marcar no asistió")
         print("0. Volver")
 
         opcion = input("\nSeleccione una opción: ").strip()
@@ -27,6 +28,9 @@ def menu_turnos():
 
         elif opcion == "4":
             reprogramar_turno()
+
+        elif opcion == "5":
+            marcar_ausente()
 
         elif opcion == "0":
             return

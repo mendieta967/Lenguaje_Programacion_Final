@@ -38,9 +38,14 @@ Al iniciar, el programa crea la carpeta `data/` y el archivo
 `data/usuarios.json` si no existen. Si el archivo no contiene usuarios, solicita
 los datos para crear el primer administrador.
 
-Los archivos `data/usuarios.json`, `data/pacientes.json`, `data/agendas.json` y
-`data/turnos.json` están excluidos de Git mediante `.gitignore` porque contienen
-datos locales. No los publiques ni compartas.
+Los archivos `data/usuarios.json`, `data/pacientes.json`, `data/agendas.json`,
+`data/turnos.json` y `data/historiasClinicas.json` están excluidos de Git
+mediante `.gitignore` porque contienen datos locales. No los publiques ni
+compartas.
+Las atenciones médicas y sus adendas se almacenan en
+`data/historiasClinicas.json`, separadas de las reservas. El archivo no cifra
+esos datos ni ofrece controles de acceso fuera de la aplicación. No uses
+información clínica real en este proyecto académico.
 
 Cada usuario se guarda con estos campos: `id`, `nombre`, `apellido`, `dni`,
 `usuario`, `password`, `rol` y `activo`. Los usuarios con rol `MEDICO` también
@@ -92,10 +97,20 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
   reprogramar turnos futuros, incluso con otro médico, si el horario está
   disponible para el médico y no se superpone con otro turno del paciente. Los
   cambios conservan el turno y su motivo, y guardan un historial de
-  reprogramaciones. El motivo de consulta sirve como antecedente de la
-  solicitud, pero no reemplaza una historia clínica documentada por el
+  reprogramaciones. Secretaría también puede marcar como `AUSENTE` un turno
+  reservado después de que termine el bloque de 30 minutos, con confirmación y
+  sin crear una atención médica. El motivo de consulta sirve como antecedente
+  de la solicitud, pero no reemplaza una historia clínica documentada por el
   profesional.
-- **Menú de médico:** todavía está en desarrollo.
+- **Menú de médico:** permite consultar sus turnos y registrar atenciones cuando
+  llegó el horario reservado. Las observaciones son obligatorias; diagnóstico
+  e indicaciones son opcionales. Al guardar la atención, el turno pasa a
+  `ATENDIDO`. Las atenciones se guardan en `historiasClinicas.json`, separadas
+  de los turnos, y quedan vinculadas al paciente y a la reserva. Cualquier
+  médico activo puede consultar por DNI la historia clínica completa y ver qué
+  profesional registró cada atención. Solo el médico autor puede agregar
+  correcciones como adendas, sin sobrescribir la nota original; secretaría no
+  tiene acceso a las notas clínicas.
 
 ## Estructura del proyecto
 
@@ -135,22 +150,27 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 │   │       ├── consultas.py
 │   │       ├── estado.py
 │   │       └── reprogramacion.py
+│   ├── medico/
+│   │   ├── menu.py
+│   │   └── consultas.py
 ├── utils/
 │   └── validaciones.py
 └── data/
     ├── usuarios.json
     ├── pacientes.json
     ├── agendas.json
-    └── turnos.json
+    ├── turnos.json
+    └── historiasClinicas.json
 ```
 
 - `main.py` inicia el programa y dirige al usuario según su rol.
 - `core/` contiene configuración, seguridad e inicialización.
 - `modules/` contiene autenticación y administración. `secretaria/` agrupa
-  el menú principal y las gestiones de pacientes, agenda y turnos.
+  las gestiones de pacientes, agenda y turnos; `medico/` contiene la atención
+  de turnos y la consulta de historias clínicas.
 - `utils/` contiene validaciones reutilizables.
-- `data/` almacena los datos locales de usuarios, pacientes, agendas y turnos;
-  no se versionan.
+- `data/` almacena los datos locales de usuarios, pacientes, agendas, turnos y
+  historias clínicas; no se versionan.
 
 ## Estado del proyecto
 
@@ -159,7 +179,9 @@ modificación y la gestión de estado de pacientes están implementados. La
 agenda permite registrar, consultar, modificar y eliminar horarios. El alta de
 turnos permite reutilizar pacientes existentes o registrar uno nuevo durante
 la operación, y guardar el motivo de consulta. Los turnos se pueden consultar
-por fecha, médico o DNI del paciente, cancelar y reprogramar con historial de
-cambios. La historia clínica y el menú de médico siguen pendientes. Antes de
-usar el sistema con datos reales, se debe mejorar el almacenamiento de
-contraseñas y ampliar la cobertura de pruebas automatizadas.
+por fecha, médico o DNI del paciente, cancelar, reprogramar con historial de
+cambios y marcar como AUSENTE. El menú de médico permite registrar atenciones,
+consultar por DNI historias clínicas compartidas entre médicos y agregar
+adendas a las atenciones propias. Antes de usar el sistema con datos reales, se
+debe mejorar el almacenamiento de contraseñas y ampliar la cobertura de
+pruebas automatizadas.

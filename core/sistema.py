@@ -2,7 +2,10 @@ import os
 import json
 
 from modules.admin.creacion import crear_primer_admin
-from core.configuracion import RUTA_DATA, RUTA_USUARIOS
+from core.configuracion import (
+    RUTA_DATA,
+    RUTA_USUARIOS,
+)
 
 def inicializar_sistema():
 

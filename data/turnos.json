@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "id_paciente": 1,
+        "id_medico": 3,
+        "fecha": "14/12/2026",
+        "hora": "09:00",
+        "estado": "CANCELADO"
+    },
+    {
+        "id": 2,
+        "id_paciente": 1,
+        "id_medico": 3,
+        "fecha": "26/11/2026",
+        "hora": "13:30",
+        "motivo_consulta": "dolor de panza",
+        "estado": "RESERVADO",
+        "historial_reprogramaciones": [
+            {
+                "fecha_cambio": "23/11/2026 18:16:55",
+                "id_medico_anterior": 3,
+                "fecha_anterior": "26/11/2026",
+                "hora_anterior": "12:00",
+                "id_medico_nuevo": 3,
+                "fecha_nueva": "26/11/2026",
+                "hora_nueva": "13:30"
+            }
+        ]
+    }
+]
