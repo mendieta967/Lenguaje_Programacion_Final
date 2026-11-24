@@ -112,6 +112,12 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
   correcciones como adendas, sin sobrescribir la nota original; secretaría no
   tiene acceso a las notas clínicas.
 
+## Material técnico para el informe
+
+- [Comparación de paradigmas, calidad y resultados de pruebas](docs/analisis_paradigmas_calidad.md)
+- [Diagrama general del sistema (imagen SVG)](docs/diagrama_sistema.svg)
+- [Fuente del diagrama PlantUML](docs/diagrama_sistema.puml)
+
 ## Estructura del proyecto
 
 ```text
@@ -121,6 +127,10 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 │   ├── configuracion.py
 │   ├── seguridad.py
 │   └── sistema.py
+├── docs/
+│   ├── analisis_paradigmas_calidad.md
+│   ├── diagrama_sistema.puml
+│   └── diagrama_sistema.svg
 ├── modules/
 │   ├── autenticacion.py
 │   ├── admin/
@@ -154,7 +164,12 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 │   │   ├── menu.py
 │   │   └── consultas.py
 ├── utils/
+│   ├── entrada.py
 │   └── validaciones.py
+├── tests/
+│   ├── test_ausencia_turnos.py
+│   ├── test_medico.py
+│   └── test_reprogramacion.py
 └── data/
     ├── usuarios.json
     ├── pacientes.json
