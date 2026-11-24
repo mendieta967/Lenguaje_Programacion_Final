@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1750" viewBox="0 0 1100 1750">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="blueArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #172033; }
+      .title { font-size: 28px; font-weight: 700; }
+      .subtitle { font-size: 15px; fill: #475569; }
+      .section { font-size: 20px; font-weight: 700; }
+      .panel { fill: #fff; stroke: #cbd5e1; stroke-width: 1.5; rx: 16; }
+      .flow { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 11; }
+      .role { fill: #f5f3ff; stroke: #7c3aed; stroke-width: 2; rx: 11; }
+      .support { fill: #ecfdf5; stroke: #059669; stroke-width: 2; rx: 10; }
+      .record { fill: #f1f5f9; stroke: #64748b; stroke-width: 2; rx: 10; }
+      .model { fill: #ecfdf5; stroke: #15803d; stroke-width: 3; rx: 10; }
+      .nested { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; rx: 10; }
+      .heading { font-size: 16px; font-weight: 700; }
+      .body { font-size: 14px; }
+      .small { font-size: 12px; }
+      .muted { fill: #475569; }
+      .line { fill: none; stroke: #475569; stroke-width: 2; marker-end: url(#arrow); }
+      .flowLine { fill: none; stroke: #2563eb; stroke-width: 2.5; marker-end: url(#blueArrow); }
+      .dash { stroke-dasharray: 6 5; }
+      .label { font-size: 12px; font-weight: 600; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect width="1100" height="1750" fill="#f8fafc"/>
+  <text x="550" y="43" text-anchor="middle" class="title">Sistema de gestión hospitalaria</text>
+  <text x="550" y="69" text-anchor="middle" class="subtitle">Vista completa de módulos y datos — implementación actual</text>
+
+  <rect x="30" y="95" width="1040" height="900" class="panel"/>
+  <text x="55" y="132" class="section">1. Recorrido por el programa</text>
+
+  <path d="M280 215 H305" class="flowLine"/>
+  <path d="M545 215 H570" class="flowLine"/>
+  <path d="M810 215 H835" class="flowLine"/>
+  <path d="M1050 215 H1070 V380 H1050" class="flowLine"/>
+  <path d="M1070 215 V590 H1050" class="flowLine"/>
+  <path d="M1070 215 V810 H1050" class="flowLine"/>
+
+  <rect x="50" y="175" width="230" height="80" class="flow"/>
+  <text x="165" y="207" text-anchor="middle" class="heading">main.py</text>
+  <text x="165" y="232" text-anchor="middle" class="body">Entrada y menú principal</text>
+
+  <rect x="305" y="175" width="240" height="80" class="flow"/>
+  <text x="425" y="207" text-anchor="middle" class="heading">core/sistema.py</text>
+  <text x="425" y="232" text-anchor="middle" class="body">Inicializa los datos locales</text>
+
+  <rect x="570" y="175" width="240" height="80" class="flow"/>
+  <text x="690" y="207" text-anchor="middle" class="heading">modules/autenticacion.py</text>
+  <text x="690" y="232" text-anchor="middle" class="body">Verifica usuario y contraseña</text>
+
+  <rect x="835" y="175" width="215" height="80" class="flow"/>
+  <text x="942" y="207" text-anchor="middle" class="heading">Enrutamiento por rol</text>
+  <text x="942" y="232" text-anchor="middle" class="body">ADMIN / SECRETARIA / MEDICO</text>
+
+  <rect x="50" y="320" width="1000" height="125" class="role"/>
+  <text x="75" y="351" class="heading">Administrador — modules/admin/</text>
+  <text x="75" y="379" class="body">menu.py · creacion.py · consultas.py · modificacion.py · estado.py</text>
+  <text x="75" y="410" class="body">Crea, consulta y modifica usuarios; activa o desactiva cuentas.</text>
+
+  <rect x="50" y="475" width="1000" height="240" class="role"/>
+  <text x="75" y="507" class="heading">Secretaría — modules/secretaria/</text>
+
+  <rect x="70" y="525" width="290" height="170" fill="#fff" stroke="#c4b5fd" rx="8"/>
+  <text x="90" y="552" class="heading">Pacientes</text>
+  <text x="90" y="579" class="body">crear.py · consultas.py</text>
+  <text x="90" y="602" class="body">modificacion.py · estado.py</text>
+  <text x="90" y="635" class="small muted">Registrar, buscar, listar,</text>
+  <text x="90" y="655" class="small muted">modificar y gestionar estado</text>
+
+  <rect x="380" y="525" width="290" height="170" fill="#fff" stroke="#c4b5fd" rx="8"/>
+  <text x="400" y="552" class="heading">Agenda médica</text>
+  <text x="400" y="579" class="body">creacion.py · consultas.py</text>
+  <text x="400" y="602" class="body">horarios.py · modificacion.py</text>
+  <text x="400" y="625" class="body">estado.py</text>
+  <text x="400" y="655" class="small muted">Registrar, consultar, modificar</text>
+  <text x="400" y="675" class="small muted">y eliminar horarios</text>
+
+  <rect x="690" y="525" width="340" height="170" fill="#fff" stroke="#c4b5fd" rx="8"/>
+  <text x="710" y="552" class="heading">Turnos</text>
+  <text x="710" y="579" class="body">creacion.py · consultas.py</text>
+  <text x="710" y="602" class="body">estado.py · reprogramacion.py</text>
+  <text x="710" y="635" class="small muted">Reservar, consultar, cancelar,</text>
+  <text x="710" y="655" class="small muted">reprogramar y marcar inasistencia</text>
+
+  <rect x="50" y="750" width="1000" height="125" class="role"/>
+  <text x="75" y="781" class="heading">Médico — modules/medico/</text>
+  <text x="75" y="809" class="body">menu.py · consultas.py</text>
+  <text x="75" y="839" class="body">Ver turnos · registrar atención · consultar historia por DNI · agregar adenda</text>
+
+  <rect x="50" y="895" width="1000" height="75" class="support"/>
+  <text x="75" y="924" class="heading">Soporte y pruebas</text>
+  <text x="75" y="950" class="small">core/: rutas, JSON, inicialización, hash  ·  utils/: validaciones y entrada  ·  tests/: 14 pruebas automatizadas</text>
+
+  <rect x="30" y="1015" width="1040" height="700" class="panel"/>
+  <text x="55" y="1052" class="section">2. Registros guardados y referencias entre ellos</text>
+  <text x="55" y="1079" class="small muted">Tarjetas grises/naranja: diccionarios JSON. Tarjeta verde: única clase Python del dominio.</text>
+
+  <path d="M290 1225 V1260" class="line"/>
+  <path d="M810 1225 V1260" class="line"/>
+  <path d="M510 1340 H590" class="line dash"/>
+  <path d="M820 1415 V1434 H680 V1450" class="line"/>
+  <path d="M680 1545 H730" class="line"/>
+
+  <text x="300" y="1250" class="label">id_medico</text>
+  <text x="820" y="1250" class="label">id_paciente</text>
+  <text x="540" y="1325" class="label">horarios</text>
+
+  <rect x="50" y="1095" width="480" height="130" class="record"/>
+  <text x="75" y="1127" class="heading">Usuario — data/usuarios.json</text>
+  <text x="75" y="1155" class="body">id, nombre, apellido, DNI, usuario, rol, activo</text>
+  <text x="75" y="1180" class="body">password como hash; MEDICO incluye especialidad</text>
+
+  <rect x="570" y="1095" width="480" height="130" class="record"/>
+  <text x="595" y="1127" class="heading">Paciente — data/pacientes.json</text>
+  <text x="595" y="1155" class="body">id, nombre, apellido, DNI, teléfono, dirección</text>
+  <text x="595" y="1180" class="body">fecha_nacimiento, activo</text>
+
+  <rect x="50" y="1260" width="460" height="155" class="record"/>
+  <text x="75" y="1292" class="heading">Agenda — data/agendas.json</text>
+  <text x="75" y="1320" class="body">id_medico y bloques de horarios</text>
+  <text x="75" y="1350" class="small muted">El turno consulta disponibilidad por médico,</text>
+  <text x="75" y="1372" class="small muted">fecha y hora; no guarda id_agenda.</text>
+
+  <rect x="590" y="1260" width="460" height="155" class="record"/>
+  <text x="615" y="1292" class="heading">Turno — data/turnos.json</text>
+  <text x="615" y="1320" class="body">id_paciente, id_medico, fecha, hora</text>
+  <text x="615" y="1346" class="body">motivo_consulta, estado, id_atencion</text>
+  <text x="615" y="1382" class="small muted">RESERVADO · CANCELADO · AUSENTE · ATENDIDO</text>
+
+  <rect x="50" y="1450" width="630" height="170" class="model"/>
+  <text x="75" y="1482" class="heading">AtencionClinica — clase Python</text>
+  <text x="75" y="1510" class="body">__datos privado · propiedades de lectura</text>
+  <text x="75" y="1536" class="body">id_paciente · id_medico · id_turno · notas</text>
+  <text x="75" y="1562" class="body">desde_turno() · agregar_adenda() · a_diccionario()</text>
+  <text x="75" y="1594" class="small muted">historiasClinicas.json · método fábrica: desde_turno()</text>
+
+  <rect x="730" y="1450" width="320" height="170" class="nested"/>
+  <text x="755" y="1482" class="heading">Adenda — registro JSON</text>
+  <text x="755" y="1510" class="body">fecha · id_medico · texto</text>
+  <text x="755" y="1540" class="small muted">Diccionario embebido en la lista</text>
+  <text x="755" y="1562" class="small muted">adendas de la atención</text>
+
+  <text x="55" y="1660" class="small muted">Las flechas son referencias guardadas por ID o datos embebidos; no implican que cada registro sea una clase Python.</text>
+  <text x="55" y="1686" class="small muted">El resto del programa usa funciones y diccionarios; el diagrama representa la implementación completa, no una arquitectura propuesta.</text>
+</svg>
