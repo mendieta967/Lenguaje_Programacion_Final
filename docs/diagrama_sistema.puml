@@ -1,0 +1,147 @@
+@startuml
+title Sistema de gestión hospitalaria - vista general del código actual
+left to right direction
+skinparam packageStyle rectangle
+skinparam componentStyle rectangle
+skinparam classAttributeIconSize 0
+
+package "Inicio y acceso" {
+    component "main.py" as Main
+    component "core.sistema\ninicializar_sistema()" as Sistema
+    component "modules.autenticacion\niniciar_sesion()" as Auth
+    component "core.seguridad\nhash / verificación" as Seguridad
+}
+
+package "Menús por rol" {
+    component "modules.admin.menu\nusuarios" as Admin
+    component "modules.secretaria.menu\npacientes, agenda y turnos" as Secretaria
+    component "modules.medico.menu\nturnos y atenciones" as Medico
+}
+
+package "Funciones de negocio" {
+    component "modules.admin\ncreacion, consultas,\nmodificacion, estado" as AdminOps
+    component "modules.secretaria.pacientes\ncrear, consultas,\nmodificacion, estado" as Pacientes
+    component "modules.secretaria.agenda\ncreacion, consultas, horarios,\nmodificacion, estado" as Agenda
+    component "modules.secretaria.turnos\ncreacion, consultas, estado,\nreprogramacion" as Turnos
+    component "modules.medico.consultas\nregistrar / consultar atención" as ConsultasMedicas
+}
+
+package "Soporte compartido" {
+    component "core.configuracion\nrutas, cargar_json(), guardar_json()" as Config
+    component "utils.validaciones" as Validaciones
+    component "utils.entrada\npedir_password()" as Entrada
+    component "tests\n14 pruebas automatizadas" as Tests
+}
+
+package "Archivos locales" {
+    database "data/usuarios.json" as UsuariosFile
+    database "data/pacientes.json" as PacientesFile
+    database "data/agendas.json" as AgendasFile
+    database "data/turnos.json" as TurnosFile
+    database "data/historiasClinicas.json" as HistoriasFile
+}
+
+class "Usuario" as Usuario <<registro JSON - dict>> {
+    id
+    nombre, apellido, DNI
+    usuario, password, rol, activo
+    especialidad (médico)
+}
+
+class "Paciente" as PacienteRecord <<registro JSON - dict>> {
+    id, nombre, apellido, DNI
+    teléfono, dirección, nacimiento
+    activo
+}
+
+class "Agenda" as AgendaRecord <<registro JSON - dict>> {
+    id_medico
+    bloques por día y horario
+}
+
+class "Turno" as TurnoRecord <<registro JSON - dict>> {
+    id_paciente, id_medico
+    fecha, hora, motivo_consulta
+    estado, id_atencion
+}
+
+class AtencionClinica <<clase Python>> {
+    - __datos: dict
+    + id, id_paciente, id_medico
+    + observaciones
+    + desde_turno(...)
+    + desde_diccionario(...)
+    + agregar_adenda(...)
+    + a_diccionario()
+}
+
+class "Adenda" as Adenda <<registro JSON embebido>> {
+    fecha
+    id_medico
+    texto
+}
+
+Main --> Sistema : inicializa
+Main --> Auth : solicita acceso
+Main --> Admin : rol ADMIN
+Main --> Secretaria : rol SECRETARIA
+Main --> Medico : rol MEDICO
+Auth --> Seguridad : verifica contraseña
+Admin --> AdminOps
+Secretaria --> Pacientes
+Secretaria --> Agenda
+Secretaria --> Turnos
+Medico --> ConsultasMedicas
+
+AdminOps ..> Config
+Pacientes ..> Config
+Agenda ..> Config
+Turnos ..> Config
+ConsultasMedicas ..> Config
+AdminOps ..> Validaciones
+Pacientes ..> Validaciones
+Turnos ..> Validaciones
+ConsultasMedicas ..> AtencionClinica
+Tests ..> Turnos
+Tests ..> ConsultasMedicas
+
+Config --> UsuariosFile
+Config --> PacientesFile
+Config --> AgendasFile
+Config --> TurnosFile
+Config --> HistoriasFile
+AdminOps ..> UsuariosFile
+Pacientes ..> PacientesFile
+Agenda ..> AgendasFile
+Turnos ..> TurnosFile
+ConsultasMedicas ..> HistoriasFile
+
+Usuario "1" <-- "0..*" AgendaRecord : id_medico
+Usuario "1" <-- "0..*" TurnoRecord : id_medico
+PacienteRecord "1" <-- "0..*" TurnoRecord : id_paciente
+AgendaRecord ..> TurnoRecord : disponibilidad consultada al reservar\n(sin id_agenda persistido)
+TurnoRecord "0..1" --> "0..1" AtencionClinica : id_atencion
+AtencionClinica "1" *-- "0..*" Adenda : lista adendas embebida
+
+note right of AtencionClinica
+  Es la única clase de dominio
+  implementada en Python.
+  desde_turno() centraliza la creación
+  de la atención (método fábrica).
+  Se persiste como diccionario JSON.
+end note
+
+note bottom of Adenda
+  Usuario, Paciente, Agenda, Turno y Adenda
+  describen registros almacenados como dict,
+  no clases Python independientes.
+  Los vínculos del modelo son referencias
+  guardadas en los JSON.
+end note
+
+note bottom of Tests
+  Las pruebas cubren reprogramación,
+  ausencias y consultas médicas.
+end note
+
+@enduml
