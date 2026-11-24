@@ -1,4 +1,3 @@
-from copy import deepcopy
 from datetime import datetime
 
 from core.configuracion import (
@@ -11,6 +10,7 @@ from core.configuracion import (
 )
 from modules.secretaria.pacientes.consultas import buscar_paciente_por_dni
 from modules.secretaria.turnos.consultas import mostrar_turnos
+from modules.modelos import AtencionClinica, FabricaAtencion
 from utils.validaciones import validar_dni
 
 
@@ -95,73 +95,6 @@ def obtener_siguiente_id_atencion(atenciones):
     ) + 1
 
 
-class AtencionClinica:
-    def __init__(self, datos):
-        self.__datos = deepcopy(datos)
-
-    @property
-    def id(self):
-        return self.__datos["id"]
-
-    @property
-    def id_paciente(self):
-        return self.__datos["id_paciente"]
-
-    @property
-    def id_medico(self):
-        return self.__datos["id_medico"]
-
-    @property
-    def observaciones(self):
-        return self.__datos["observaciones"]
-
-    @classmethod
-    def desde_diccionario(cls, datos):
-        return cls(datos)
-
-    @classmethod
-    def desde_turno(
-        cls,
-        id_atencion,
-        turno,
-        id_medico,
-        observaciones,
-        diagnostico,
-        indicaciones,
-        momento_atencion,
-    ):
-        if not observaciones.strip():
-            raise ValueError("Las observaciones no pueden estar vacías.")
-
-        return cls({
-            "id": id_atencion,
-            "id_turno": turno["id"],
-            "id_paciente": turno["id_paciente"],
-            "id_medico": id_medico,
-            "fecha_atencion": momento_atencion.strftime("%d/%m/%Y %H:%M:%S"),
-            "motivo_consulta": turno.get("motivo_consulta", "No especificado"),
-            "observaciones": observaciones.strip(),
-            "diagnostico": diagnostico.strip() or None,
-            "indicaciones": indicaciones.strip() or None,
-            "adendas": [],
-        })
-
-    def agregar_adenda(self, id_medico, texto, fecha_adenda):
-        if self.id_medico != id_medico:
-            raise ValueError("No se puede corregir esta atención.")
-        if not texto.strip():
-            raise ValueError("La corrección no puede estar vacía.")
-
-        self.__datos.setdefault("adendas", []).append({
-            "fecha": fecha_adenda.strftime("%d/%m/%Y %H:%M:%S"),
-            "id_medico": id_medico,
-            "texto": texto.strip(),
-        })
-
-    def a_diccionario(self):
-        return deepcopy(self.__datos)
-
-
 def crear_atencion(
     id_atencion,
     turno,
@@ -174,7 +107,7 @@ def crear_atencion(
     if not turno_puede_atenderse(turno, id_medico, momento_atencion):
         raise ValueError("El turno no está disponible para registrar la atención.")
 
-    return AtencionClinica.desde_turno(
+    return FabricaAtencion.crear(
         id_atencion,
         turno,
         id_medico,

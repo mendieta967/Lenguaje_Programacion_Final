@@ -125,6 +125,7 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 ├── main.py
 ├── core/
 │   ├── configuracion.py
+│   ├── repositorio_json.py
 │   ├── seguridad.py
 │   └── sistema.py
 ├── docs/
@@ -133,6 +134,7 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 │   └── diagrama_sistema.svg
 ├── modules/
 │   ├── autenticacion.py
+│   ├── modelos.py
 │   ├── admin/
 │   │   ├── menu.py
 │   │   ├── consultas.py
@@ -169,6 +171,7 @@ anterior de contraseña podrían necesitar un restablecimiento o una migración.
 ├── tests/
 │   ├── test_ausencia_turnos.py
 │   ├── test_medico.py
+│   ├── test_modelos.py
 │   └── test_reprogramacion.py
 └── data/
     ├── usuarios.json

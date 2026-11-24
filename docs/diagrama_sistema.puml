@@ -1,147 +1,172 @@
 @startuml
-title Sistema de gestión hospitalaria - vista general del código actual
+title Sistema de gestion hospitalaria - Diagrama UML completo
 left to right direction
-skinparam packageStyle rectangle
-skinparam componentStyle rectangle
 skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
 
-package "Inicio y acceso" {
-    component "main.py" as Main
-    component "core.sistema\ninicializar_sistema()" as Sistema
-    component "modules.autenticacion\niniciar_sesion()" as Auth
-    component "core.seguridad\nhash / verificación" as Seguridad
+class Usuario {
+  - id: int
+  - nombre: str
+  - apellido: str
+  - dni: str
+  - usuario: str
+  - password: str
+  - rol: str
+  - activo: bool
+  + aDiccionario(): dict
+  + estaActivo(): bool
 }
 
-package "Menús por rol" {
-    component "modules.admin.menu\nusuarios" as Admin
-    component "modules.secretaria.menu\npacientes, agenda y turnos" as Secretaria
-    component "modules.medico.menu\nturnos y atenciones" as Medico
+class UsuarioMedico {
+  - especialidad: str
+  + aDiccionario(): dict
+  + atenderTurno(): void
+  + consultarHistoria(): void
 }
 
-package "Funciones de negocio" {
-    component "modules.admin\ncreacion, consultas,\nmodificacion, estado" as AdminOps
-    component "modules.secretaria.pacientes\ncrear, consultas,\nmodificacion, estado" as Pacientes
-    component "modules.secretaria.agenda\ncreacion, consultas, horarios,\nmodificacion, estado" as Agenda
-    component "modules.secretaria.turnos\ncreacion, consultas, estado,\nreprogramacion" as Turnos
-    component "modules.medico.consultas\nregistrar / consultar atención" as ConsultasMedicas
+class UsuarioSecretaria {
+  + registrarPaciente(): void
+  + registrarTurno(): void
+  + cancelarTurno(): void
+  + reprogramarTurno(): void
 }
 
-package "Soporte compartido" {
-    component "core.configuracion\nrutas, cargar_json(), guardar_json()" as Config
-    component "utils.validaciones" as Validaciones
-    component "utils.entrada\npedir_password()" as Entrada
-    component "tests\n14 pruebas automatizadas" as Tests
+class Paciente {
+  - id: int
+  - nombre: str
+  - apellido: str
+  - dni: str
+  - telefono: str
+  - direccion: str
+  - fechaNacimiento: str
+  - activo: bool
+  + aDiccionario(): dict
+  + estaActivo(): bool
 }
 
-package "Archivos locales" {
-    database "data/usuarios.json" as UsuariosFile
-    database "data/pacientes.json" as PacientesFile
-    database "data/agendas.json" as AgendasFile
-    database "data/turnos.json" as TurnosFile
-    database "data/historiasClinicas.json" as HistoriasFile
+class Agenda {
+  - id: int
+  - idMedico: int
+  - dias: list
+  + agregarBloque(): void
+  + eliminarBloque(): void
+  + consultarDisponibilidad(): list
 }
 
-class "Usuario" as Usuario <<registro JSON - dict>> {
-    id
-    nombre, apellido, DNI
-    usuario, password, rol, activo
-    especialidad (médico)
+class BloqueHorario {
+  - dia: str
+  - horaInicio: str
+  - horaFin: str
+  + perteneceAlMedico(): bool
+  + estaDisponible(): bool
 }
 
-class "Paciente" as PacienteRecord <<registro JSON - dict>> {
-    id, nombre, apellido, DNI
-    teléfono, dirección, nacimiento
-    activo
+class Turno {
+  - id: int
+  - fecha: str
+  - hora: str
+  - motivoConsulta: str
+  - estado: str
+  - historialReprogramaciones: list
+  + cancelar(): void
+  + reprogramar(): void
+  + marcarAusente(): void
+  + marcarAtendido(): void
+  + vincularAtencion(): void
 }
 
-class "Agenda" as AgendaRecord <<registro JSON - dict>> {
-    id_medico
-    bloques por día y horario
+class AtencionClinica {
+  - datos: dict
+  - observaciones: str
+  - diagnostico: str
+  - indicaciones: str
+  + agregarAdenda(): void
+  + aDiccionario(): dict
+  + getId(): int
+  + getIdPaciente(): int
+  + getIdMedico(): int
 }
 
-class "Turno" as TurnoRecord <<registro JSON - dict>> {
-    id_paciente, id_medico
-    fecha, hora, motivo_consulta
-    estado, id_atencion
+class Adenda {
+  - fecha: str
+  - idMedico: int
+  - texto: str
+  + aDiccionario(): dict
 }
 
-class AtencionClinica <<clase Python>> {
-    - __datos: dict
-    + id, id_paciente, id_medico
-    + observaciones
-    + desde_turno(...)
-    + desde_diccionario(...)
-    + agregar_adenda(...)
-    + a_diccionario()
+class FabricaAtencion <<Factory Method>> {
+  + crear(id, turno, idMedico, observaciones, diagnostico, indicaciones, momento): AtencionClinica
 }
 
-class "Adenda" as Adenda <<registro JSON embebido>> {
-    fecha
-    id_medico
-    texto
+class RepositorioJson <<Singleton>> {
+  - instancia: RepositorioJson
+  + cargar(ruta: str): list
+  + guardar(ruta: str, datos: list): void
+  + getInstancia(): RepositorioJson
 }
 
-Main --> Sistema : inicializa
-Main --> Auth : solicita acceso
-Main --> Admin : rol ADMIN
-Main --> Secretaria : rol SECRETARIA
-Main --> Medico : rol MEDICO
-Auth --> Seguridad : verifica contraseña
-Admin --> AdminOps
-Secretaria --> Pacientes
-Secretaria --> Agenda
-Secretaria --> Turnos
-Medico --> ConsultasMedicas
+Usuario <|-- UsuarioMedico
+Usuario <|-- UsuarioSecretaria
 
-AdminOps ..> Config
-Pacientes ..> Config
-Agenda ..> Config
-Turnos ..> Config
-ConsultasMedicas ..> Config
-AdminOps ..> Validaciones
-Pacientes ..> Validaciones
-Turnos ..> Validaciones
-ConsultasMedicas ..> AtencionClinica
-Tests ..> Turnos
-Tests ..> ConsultasMedicas
+UsuarioMedico "1" -- "1" Agenda : administra >
+Agenda "1" *-- "1..*" BloqueHorario : contiene
 
-Config --> UsuariosFile
-Config --> PacientesFile
-Config --> AgendasFile
-Config --> TurnosFile
-Config --> HistoriasFile
-AdminOps ..> UsuariosFile
-Pacientes ..> PacientesFile
-Agenda ..> AgendasFile
-Turnos ..> TurnosFile
-ConsultasMedicas ..> HistoriasFile
+Paciente "1" -- "0..*" Turno : solicita >
+UsuarioMedico "1" -- "0..*" Turno : atiende >
+Agenda "1" -- "0..*" Turno : dispone horario >
+Turno "0..1" -- "0..1" AtencionClinica : genera >
 
-Usuario "1" <-- "0..*" AgendaRecord : id_medico
-Usuario "1" <-- "0..*" TurnoRecord : id_medico
-PacienteRecord "1" <-- "0..*" TurnoRecord : id_paciente
-AgendaRecord ..> TurnoRecord : disponibilidad consultada al reservar\n(sin id_agenda persistido)
-TurnoRecord "0..1" --> "0..1" AtencionClinica : id_atencion
-AtencionClinica "1" *-- "0..*" Adenda : lista adendas embebida
+AtencionClinica "1" *-- "0..*" Adenda : registra >
+Paciente "1" -- "0..*" AtencionClinica : tiene historia >
+UsuarioMedico "1" -- "0..*" AtencionClinica : registra >
 
-note right of AtencionClinica
-  Es la única clase de dominio
-  implementada en Python.
-  desde_turno() centraliza la creación
-  de la atención (método fábrica).
-  Se persiste como diccionario JSON.
+FabricaAtencion ..> AtencionClinica : crea
+FabricaAtencion ..> Turno : recibe datos de
+RepositorioJson ..> Usuario : persiste
+RepositorioJson ..> Paciente : persiste
+RepositorioJson ..> Agenda : persiste
+RepositorioJson ..> Turno : persiste
+RepositorioJson ..> AtencionClinica : persiste
+
+note right of UsuarioMedico
+  UsuarioMedico hereda de Usuario
+  porque comparte identificacion,
+  credenciales, rol activo y datos
+  personales. Agrega especialidad.
 end note
 
-note bottom of Adenda
-  Usuario, Paciente, Agenda, Turno y Adenda
-  describen registros almacenados como dict,
-  no clases Python independientes.
-  Los vínculos del modelo son referencias
-  guardadas en los JSON.
+note right of Agenda
+  La composicion indica que los
+  BloqueHorario pertenecen a una
+  Agenda y no tienen vida propia
+  fuera de ella.
 end note
 
-note bottom of Tests
-  Las pruebas cubren reprogramación,
-  ausencias y consultas médicas.
+note bottom of Turno
+  Turno relaciona al Paciente y al
+  UsuarioMedico. Tambien puede
+  consultar una Agenda para reservar
+  un bloque disponible.
+end note
+
+note bottom of AtencionClinica
+  Una AtencionClinica pertenece a un
+  Paciente y fue creada por un medico.
+  Sus Adendas son parte de la atencion
+  y no sustituyen la nota original.
+end note
+
+note bottom of FabricaAtencion
+  Patron Factory Method:
+  centraliza la validacion y construccion
+  de AtencionClinica desde un Turno.
+end note
+
+note bottom of RepositorioJson
+  Patron Singleton:
+  garantiza una instancia compartida
+  para cargar y guardar los archivos JSON.
 end note
 
 @enduml
