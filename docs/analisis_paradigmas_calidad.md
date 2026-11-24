@@ -16,6 +16,28 @@ El programa no implementa una interfaz gráfica basada en eventos: sus menús
 son ciclos de consola que esperan una entrada con `input()`. Por eso no se
 presenta la programación orientada a eventos como un paradigma aplicado.
 
+## Modelado UML y patrones aplicados
+
+El modelo mínimo de `modules/modelos.py` incorpora las clases principales
+necesarias para representar el sistema sin reemplazar las estructuras JSON
+existentes:
+
+- `Usuario` es una clase base y `UsuarioMedico`/`UsuarioSecretaria` representan
+  una relación de herencia.
+- `Paciente` y `Turno` representan una agregación por el identificador
+  `id_paciente`.
+- `UsuarioMedico` y `Turno` representan la relación entre médico y citas.
+- `AtencionClinica` contiene `Adenda` mediante composición: una adenda forma
+  parte del registro de atención y se crea con sus datos encapsulados.
+- `FabricaAtencion` aplica Factory Method y crea una atención a partir de un
+  turno y los datos registrados por el médico.
+- `RepositorioJson` aplica Singleton: todas las llamadas de
+  `core/configuracion.py` usan la misma instancia para cargar y guardar archivos.
+
+Las clases se pueden convertir a diccionarios mediante `a_diccionario()`.
+Así, el modelo mejora las relaciones y reglas de diseño sin cambiar el formato
+actual de los archivos JSON ni los menús de consola.
+
 ## Selección y combinación
 
 La selección se hizo por el tipo de problema, no para convertir todo el
@@ -80,15 +102,16 @@ Ejecución realizada el **23/11/2026** en el entorno local del proyecto:
 Resultado:
 
 ```text
-Ran 14 tests
+Ran 18 tests
 OK
 ```
 
-Las 14 pruebas se distribuyen entre ausencias (`test_ausencia_turnos.py`),
-reprogramación (`test_reprogramacion.py`) y consultas/atenciones médicas
-(`test_medico.py`). Este resultado demuestra que esos casos automatizados
-pasaron; no demuestra por sí solo que todas las funciones estén cubiertas ni
-que el sistema sea seguro para producción.
+Las 18 pruebas se distribuyen entre ausencias (`test_ausencia_turnos.py`),
+reprogramación (`test_reprogramacion.py`), consultas/atenciones médicas
+(`test_medico.py`) y modelos/patrones (`test_modelos.py`). Este resultado
+demuestra que esos casos automatizados pasaron; no demuestra por sí solo que
+todas las funciones estén cubiertas ni que el sistema sea seguro para
+producción.
 
 ## Impacto de la calidad en los usuarios
 

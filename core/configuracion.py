@@ -1,5 +1,5 @@
 import os
-import json
+from core.repositorio_json import RepositorioJson
 
 RUTA_PROYECTO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUTA_DATA = os.path.join(RUTA_PROYECTO, "data")
@@ -11,25 +11,8 @@ RUTA_TURNOS = os.path.join(RUTA_DATA, "turnos.json")
 RUTA_HISTORIAS_CLINICAS = os.path.join(RUTA_DATA, "historiasClinicas.json")
 
 def cargar_json(ruta):
-
-    try:
-        with open(ruta, "r", encoding="utf-8") as archivo:
-            return json.load(archivo)
-
-    except FileNotFoundError:
-        return []
-
-    except json.JSONDecodeError:
-        return []
+    return RepositorioJson().cargar(ruta)
 
 
 def guardar_json(ruta, datos):
-
-    with open(ruta, "w", encoding="utf-8") as archivo:
-
-        json.dump(
-            datos,
-            archivo,
-            indent=4,
-            ensure_ascii=False
-        )
+    RepositorioJson().guardar(ruta, datos)
