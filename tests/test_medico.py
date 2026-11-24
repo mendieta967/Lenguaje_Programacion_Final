@@ -5,6 +5,7 @@ from modules.medico.consultas import (
     agregar_adenda_a_atencion,
     obtener_atenciones_medico,
     obtener_historia_clinica,
+    obtener_siguiente_id_atencion,
     obtener_turnos_atendibles,
     crear_atencion,
     vincular_atencion_a_turno,
@@ -136,6 +137,13 @@ class ConsultasMedicasTests(unittest.TestCase):
             obtener_historia_clinica(atenciones, 7),
             atenciones[:2],
         )
+
+    def test_siguiente_id_se_calcula_con_ids_existentes_o_lista_vacia(self):
+        self.assertEqual(
+            obtener_siguiente_id_atencion([{"id": 2}, {"id": 6}]),
+            7,
+        )
+        self.assertEqual(obtener_siguiente_id_atencion([]), 1)
 
     def test_edicion_sigue_limitada_al_medico_autor(self):
         atenciones = [
