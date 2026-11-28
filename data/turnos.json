@@ -14,7 +14,7 @@
         "fecha": "26/11/2026",
         "hora": "13:30",
         "motivo_consulta": "dolor de panza",
-        "estado": "RESERVADO",
+        "estado": "AUSENTE",
         "historial_reprogramaciones": [
             {
                 "fecha_cambio": "23/11/2026 18:16:55",
@@ -26,5 +26,88 @@
                 "hora_nueva": "13:30"
             }
         ]
+    },
+    {
+        "id": 3,
+        "id_paciente": 3,
+        "id_medico": 6,
+        "fecha": "24/11/2026",
+        "hora": "08:30",
+        "motivo_consulta": "Problema del corazon",
+        "estado": "RESERVADO"
+    },
+    {
+        "id": 4,
+        "id_paciente": 2,
+        "id_medico": 6,
+        "fecha": "27/11/2026",
+        "hora": "12:00",
+        "motivo_consulta": "obstruccion en los vasos sanguineos",
+        "estado": "RESERVADO"
+    },
+    {
+        "id": 5,
+        "id_paciente": 4,
+        "id_medico": 3,
+        "fecha": "25/11/2026",
+        "hora": "12:00",
+        "motivo_consulta": "dolor de corazon",
+        "estado": "RESERVADO"
+    },
+    {
+        "id": 6,
+        "id_paciente": 3,
+        "id_medico": 3,
+        "fecha": "25/11/2026",
+        "hora": "17:00",
+        "motivo_consulta": "venas obstruidas",
+        "estado": "RESERVADO"
+    },
+    {
+        "id": 7,
+        "id_paciente": 5,
+        "id_medico": 8,
+        "fecha": "27/11/2026",
+        "hora": "10:00",
+        "motivo_consulta": "pobrema en el cerebro",
+        "estado": "ATENDIDO",
+        "id_atencion": 1
+    },
+    {
+        "id": 8,
+        "id_paciente": 4,
+        "id_medico": 8,
+        "fecha": "27/11/2026",
+        "hora": "10:30",
+        "motivo_consulta": "tumor cerebral",
+        "estado": "ATENDIDO",
+        "id_atencion": 2
+    },
+    {
+        "id": 9,
+        "id_paciente": 5,
+        "id_medico": 8,
+        "fecha": "30/11/2026",
+        "hora": "12:00",
+        "motivo_consulta": "Dolor neuropático",
+        "estado": "RESERVADO"
+    },
+    {
+        "id": 10,
+        "id_paciente": 6,
+        "id_medico": 8,
+        "fecha": "30/11/2026",
+        "hora": "12:30",
+        "motivo_consulta": "Insomnio crónico",
+        "estado": "RESERVADO"
+    },
+    {
+        "id": 11,
+        "id_paciente": 7,
+        "id_medico": 8,
+        "fecha": "30/11/2026",
+        "hora": "13:00",
+        "motivo_consulta": "perdida de memoria",
+        "estado": "RESERVADO"
     }
 ]

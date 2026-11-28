@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "id_turno": 7,
+        "id_paciente": 5,
+        "id_medico": 8,
+        "fecha_atencion": "27/11/2026 10:40:38",
+        "motivo_consulta": "pobrema en el cerebro",
+        "observaciones": "tiene dolores de cabeza intenso",
+        "diagnostico": "debe ir a sacarse uuna radiografia",
+        "indicaciones": "ir a la sala de radiografia",
+        "adendas": [
+            {
+                "fecha": "27/11/2026 10:41:37",
+                "id_medico": 8,
+                "texto": "tiene dolores de cabeza intenso"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "id_turno": 8,
+        "id_paciente": 4,
+        "id_medico": 8,
+        "fecha_atencion": "27/11/2026 10:43:26",
+        "motivo_consulta": "tumor cerebral",
+        "observaciones": "dolor de cabeza, vulto en la cabeza",
+        "diagnostico": "debe sacarse una radiografia",
+        "indicaciones": "deber ir a radiografia y regresar con los resultados",
+        "adendas": []
+    }
+]

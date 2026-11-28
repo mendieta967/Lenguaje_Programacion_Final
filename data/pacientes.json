@@ -18,5 +18,55 @@
         "direccion": "jujuy",
         "fecha_nacimiento": "19/02/1994",
         "activo": true
+    },
+    {
+        "id": 3,
+        "nombre": "benjamin",
+        "apellido": "hernandez",
+        "dni": "23456788",
+        "telefono": "987654321",
+        "direccion": "mz f lt 24",
+        "fecha_nacimiento": "22/06/2026",
+        "activo": true
+    },
+    {
+        "id": 4,
+        "nombre": "brandon",
+        "apellido": "rodriguez",
+        "dni": "98532637",
+        "telefono": "927352723",
+        "direccion": "mz l Lt 12",
+        "fecha_nacimiento": "15/02/2000",
+        "activo": true
+    },
+    {
+        "id": 5,
+        "nombre": "pablo",
+        "apellido": "jimenez",
+        "dni": "39362151",
+        "telefono": "973562627",
+        "direccion": "mz 14",
+        "fecha_nacimiento": "09/06/2004",
+        "activo": true
+    },
+    {
+        "id": 6,
+        "nombre": "marcelo",
+        "apellido": "soto",
+        "dni": "28673662",
+        "telefono": "923682623",
+        "direccion": "mz g lt 32",
+        "fecha_nacimiento": "18/02/1990",
+        "activo": true
+    },
+    {
+        "id": 7,
+        "nombre": "joshep",
+        "apellido": "rodriguez",
+        "dni": "43887313",
+        "telefono": "936462873",
+        "direccion": "mz 34 LT 12",
+        "fecha_nacimiento": "30/04/1970",
+        "activo": true
     }
 ]

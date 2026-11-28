@@ -40,5 +40,47 @@
         "rol": "MEDICO",
         "activo": true,
         "especialidad": "Odontologo"
+    },
+    {
+        "id": 5,
+        "nombre": "DAN",
+        "apellido": "ABANTO",
+        "dni": "12345678",
+        "usuario": "dan123",
+        "password": "54b688a517f7654563a6c64d945a3670880a4c602ec67a065bbebbcd2b22edd5",
+        "rol": "SECRETARIA",
+        "activo": true
+    },
+    {
+        "id": 6,
+        "nombre": "renzo",
+        "apellido": "tantaquispe",
+        "dni": "72345512",
+        "usuario": "renzo123",
+        "password": "36139c33b4ec14b24da992335ed4296454da814dcdf0605beeda8ef3e02d90b4",
+        "rol": "MEDICO",
+        "activo": true,
+        "especialidad": "Cardiologia"
+    },
+    {
+        "id": 7,
+        "nombre": "daniela",
+        "apellido": "abanto",
+        "dni": "23456789",
+        "usuario": "abanto12",
+        "password": "2dc0269fa54d269a87536810ec453cb095b4b92f45e63826a21dff1c2e76f169",
+        "rol": "SECRETARIA",
+        "activo": true
+    },
+    {
+        "id": 8,
+        "nombre": "jahir",
+        "apellido": "vazques",
+        "dni": "39726433",
+        "usuario": "jahir12",
+        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "rol": "MEDICO",
+        "activo": true,
+        "especialidad": "neurología"
     }
 ]
